@@ -50,10 +50,7 @@
 		error_log("Failed to connect to to MySQL: " . mysql_connect_error()."\n\n",3,'sync.log');
 		$connection->close();
 		exit(0);
-	}	
-	echo "Successfully connected to {$s1_db_name} database.".nl2br("\n\n");
-	error_log($date->format('Y-m-d\TH:i:sP')."\n",3,'sync.log');
-	error_log("Successfully connected to {$s1_db_name}"."\n\n",3,'sync.log');	
+	}
 	ob_flush();
 	flush();
 	
@@ -65,14 +62,9 @@
 	if ($result->num_rows > 0) {
 		while($row = $result->fetch_array(MYSQLI_NUM)) {
 			$connection->query('DROP TABLE IF EXISTS '.$row[0]);
-			error_log("`{$s1_db_name}.{$row[0]}` table deleted."."\n",3,'sync.log');
 		}
 	}		
 	$connection->close();	
-	
-	error_log("{$result->num_rows} tables successfully deleted."."\n\n",3,'sync.log');
-	ob_flush();
-	flush();
 	
 	
 	/* CODE SECTION - IMPORT DUMPED FILE FROM STAGING DB INTO LIVE DB */	
@@ -98,9 +90,6 @@
 		$connection->close();
 		exit(0);
 	}	
-	echo "Successfully connected to {$s1_db_name} database.".nl2br("\n\n");
-	error_log($date->format('Y-m-d\TH:i:sP')."\n",3,'sync.log');
-	error_log("Successfully connected to {$s1_db_name}"."\n\n",3,'sync.log');
 	ob_flush();
 	flush();
 	
